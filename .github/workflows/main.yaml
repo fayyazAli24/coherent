@@ -1,8 +1,13 @@
-name: iOS-ipa-build
-
 on:
-  workflow_dispatch:
-
+  pull_request:
+    branches:
+      - main
+      - master
+  push:
+    branches:
+      - main
+      - master
+      - develop
 jobs:
   build-ios:
     name: 🎉 iOS Build
@@ -35,7 +40,7 @@ jobs:
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: ${{ secrets.TEST }}
           file: build/ios/iphoneos/FlutterIpaExport.ipa
           tag: v1.0
           overwrite: true

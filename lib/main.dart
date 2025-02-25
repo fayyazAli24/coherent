@@ -19,7 +19,11 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'Coherent',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            textTheme: const TextTheme(
+              bodyMedium: TextStyle(
+                fontFamily: "Poppins",
+              ),
+            ),
           ),
           debugShowCheckedModeBanner: false, // Hide debug banner
           initialRoute: RouteNames.splash, // Set initial route to login

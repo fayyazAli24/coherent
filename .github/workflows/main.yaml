@@ -1,17 +1,19 @@
 on:
   pull_request:
     branches:
-      - main
+#      - main
       - master
   push:
     branches:
-      - main
+#      - main
       - master
       - develop
+
 jobs:
   build-ios:
     name: 🎉 iOS Build
     runs-on: macos-latest
+
     steps:
       - uses: actions/checkout@v3
 
@@ -19,19 +21,22 @@ jobs:
         with:
           channel: 'stable'
           architecture: x64
-      - run: flutter pub get
 
+      - name: Get Flutter dependencies
+        run: flutter pub get
 
-      - run: pod repo update
+      - name: Install iOS dependencies
+        run: pod install
         working-directory: ios
 
-      - run: flutter build ios --release --no-codesign
+      - name: Build iOS app (unsigned)
+        run: flutter build ios --release --no-codesign
 
-      - run: mkdir Payload
-        working-directory: build/ios/iphoneos
+      - name: Create Payload directory
+        run: mkdir -p build/ios/iphoneos/Payload
 
-      - run: mv Runner.app/ Payload
-        working-directory: build/ios/iphoneos
+      - name: Move Runner.app to Payload
+        run: mv build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload/
 
       - name: Zip output
         run: zip -qq -r -9 FlutterIpaExport.ipa Payload
@@ -40,8 +45,8 @@ jobs:
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
-          repo_token: ${{ secrets.TEST }}
+          token: ${{ secrets.TEST }}  # Corrected input name
           file: build/ios/iphoneos/FlutterIpaExport.ipa
-          tag: v1.0
+          tag: v1.0  # Ensure this tag exists in your repository
           overwrite: true
-          body: "This is first release"
+          body: "This is the first release"

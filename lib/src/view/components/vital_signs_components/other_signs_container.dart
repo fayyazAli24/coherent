@@ -1,77 +1,106 @@
+import 'package:coherent/src/core/utils/app_assets.dart';
 import 'package:flutter/material.dart';
-
-import 'line_chart.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SignContainer extends StatelessWidget {
-  final icon;
-  final iconColor;
-  final textColor;
-  final title;
-  final value;
-  var data;
+  final IconData icon;
+  final Color iconColor;
+  final Color textColor;
+  final String title;
+  final String value;
+  final trailingIcon;
+  final trailColor;
 
-  SignContainer(
+  const SignContainer(
       {super.key,
       required this.icon,
       required this.title,
       required this.value,
       required this.iconColor,
-      required this.textColor});
+      required this.textColor,
+      required this.trailingIcon,
+      required this.trailColor});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      child: Container(
-        height: 150,
+    return Container(
+        width: 60.w, // Adjust based on UI needs
+        height: 21.h,
+        padding: EdgeInsets.all(12),
+        margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.grey.withOpacity(0.2),
-          //     spreadRadius: 2,
-          //     blurRadius: 5,
-          //     offset: Offset(0, 3), // Changes the shadow's direction
-          //   ),
-          // ],
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 6,
+              spreadRadius: 2,
+              offset: Offset(0, 4),
+            ),
+          ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                /// **Title Text**
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 17.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                SizedBox(height: 6),
+
+                /// **Icon + Value**
                 Row(
                   children: [
-                    Icon(
-                      icon,
-                      color: iconColor,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
+                    Icon(icon, color: iconColor, size: 20),
+                    SizedBox(width: 4),
                     Text(
-                      title,
-                      style: TextStyle(fontSize: 18),
+                      value,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: textColor,
+                      ),
                     ),
                   ],
                 ),
+                SizedBox(height: 1.h),
+
+                /// **Synced Info**
                 Text(
-                  value,
-                  style: TextStyle(color: textColor, fontSize: 16),
+                  "Synced on",
+                  style: TextStyle(fontSize: 12, color: Colors.black54),
                 ),
-                Text("2 Days Ago", style: TextStyle(fontSize: 15))
+                SizedBox(height: 1.h),
+
+                Text(
+                  "30 Oct 2024",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
               ],
             ),
-            SizedBox(
-              height: 110,
-              width: 160,
-              child: LineChartWidget(),
+            Column(
+              children: [
+                Text('Current Vitals'),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Image.asset(
+                  AppAssets.vital_signs, // Replace with your image path
+                  width: 40, // Adjust size as needed
+                  height: 40,
+                ),
+              ],
             )
           ],
-        ),
-      ),
-    );
+        ));
   }
 }

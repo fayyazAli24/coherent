@@ -42,10 +42,10 @@ class _PrescriptionState extends State<PrescriptionScreen> {
                     height: 15,
                   ),
                   Container(
-                    width: 120,
+                    width: 100,
                     height: 30,
                     decoration: BoxDecoration(color: Colors.blue.shade200, borderRadius: BorderRadius.circular(25)),
-                    child: Center(child: Text("Intramuscular")),
+                    child: Center(child: Text("ORAL")),
                   ),
                   SizedBox(
                     height: 6,

@@ -1,11 +1,11 @@
 on:
   pull_request:
     branches:
-#      - main
+      - main
       - master
   push:
     branches:
-#      - main
+      - main
       - master
       - develop
 

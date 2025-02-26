@@ -15,4 +15,7 @@ class AppAssets {
   static const otpBackground = 'assets/images/otpBackground.svg';
   static const background = 'assets/icons/background.jpg';
   static const appointment = 'assets/icons/appointment.png';
+
+  /// images
+  static const doctorImage = 'assets/images/doctor2.jpg';
 }

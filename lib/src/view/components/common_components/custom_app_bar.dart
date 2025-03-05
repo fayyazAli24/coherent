@@ -20,7 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: backbutton ?? false,
-      backgroundColor: backgroundColor ?? AppColors.appGreen,
+      backgroundColor: backgroundColor ?? AppColors.primaryColor,
       centerTitle: true,
       iconTheme: IconThemeData(
         color: Colors.white, // Change back button color here

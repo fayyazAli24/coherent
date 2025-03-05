@@ -11,18 +11,21 @@ class LineChartWidget extends StatefulWidget {
 }
 
 class _LineDefaultState extends State<LineChartWidget> {
-  List<_ChartData>? chartData;
+  DateTime now = DateTime.now();
+  late List<_ChartData> chartData; // Initialize chartData properly
+  List<double> values = [22.5, 22.3, 21.0, 21.7, 21.5, 21.8];
 
   @override
   void initState() {
     super.initState();
+    chartData = []; // Properly initialize the list
 
-    // Sample hourly transaction data (every 3 hours for a week)
-    chartData = <_ChartData>[
-      _ChartData('90', 90),
-      _ChartData('95', 95),
-      _ChartData('100', 100),
-    ];
+    for (int i = 0; i < values.length; i++) {
+      DateTime monthDate = DateTime(now.year, now.month - i, 1);
+      String monthName = getMonthAbbreviation(monthDate.month);
+
+      chartData.insert(0, _ChartData(monthName, values[i])); // Insert values
+    }
   }
 
   @override
@@ -35,10 +38,12 @@ class _LineDefaultState extends State<LineChartWidget> {
           labelRotation: 45, // Set the label rotation angle
         ),
         primaryYAxis: NumericAxis(
-          labelFormat: '{value}',
+          minimum: 18, // Set the minimum value of BMI
+          maximum: 25, // Set the maximum value of BMI
+          interval: 1, // Interval between BMI values
+          labelFormat: '{value}', // Format the Y-axis labels
           axisLine: AxisLine(width: 0),
           majorTickLines: MajorTickLines(color: Colors.transparent),
-          isVisible: false, // Hides the Y-axis labels
         ),
         series: _getLineSeries(),
         tooltipBehavior: TooltipBehavior(enable: true),
@@ -49,10 +54,10 @@ class _LineDefaultState extends State<LineChartWidget> {
   List<LineSeries<_ChartData, String>> _getLineSeries() {
     return <LineSeries<_ChartData, String>>[
       LineSeries<_ChartData, String>(
-        dataSource: chartData!,
+        dataSource: chartData,
         xValueMapper: (_ChartData data, _) => data.time,
         yValueMapper: (_ChartData data, _) => data.transaction,
-        name: 'Transaction',
+        name: 'BMI',
         color: AppColors.primaryColor,
         markerSettings: const MarkerSettings(isVisible: true),
       ),
@@ -60,8 +65,13 @@ class _LineDefaultState extends State<LineChartWidget> {
   }
 }
 
+String getMonthAbbreviation(int month) {
+  List<String> monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  return monthNames[month - 1];
+}
+
 class _ChartData {
   _ChartData(this.time, this.transaction);
-  final String time; // Represents time in "Day HH:mm" format
-  final double transaction; // Represents transaction amount
+  final String time; // Represents the month (e.g., Jan, Feb)
+  final double transaction; // Represents BMI value for the month
 }

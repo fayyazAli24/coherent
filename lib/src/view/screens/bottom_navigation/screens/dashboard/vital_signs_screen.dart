@@ -1,7 +1,8 @@
 import 'package:coherent/src/core/utils/app_colors.dart';
-import 'package:coherent/src/view/components/vital_signs_components/height_container.dart';
+import 'package:coherent/src/view/components/vital_signs_components/line_chart.dart';
 import 'package:coherent/src/view/components/vital_signs_components/other_signs_container.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../components/common_components/custom_app_bar.dart';
 
@@ -29,30 +30,8 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
           child: Column(
             children: [
               // Height Container (Full Width)
-              HeightContainer(
-                height: Row(
-                  children: [
-                    Icon(Icons.height, size: 26, color: AppColors.primaryColor),
-                    SizedBox(width: 6),
-                    Text(
-                      "Height",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-                value: Row(
-                  children: [
-                    Text(
-                      "172.2 cm",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(width: 4),
-                    Text(
-                      "(5'8\")",
-                      style: TextStyle(fontSize: 18, color: Colors.grey[600]),
-                    )
-                  ],
-                ),
+              Column(
+                children: [Text('BMI Graph'), SizedBox(width: 90.w, height: 20.h, child: LineChartWidget())],
               ),
 
               SizedBox(height: 16), // Spacing
@@ -78,6 +57,15 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
                     trailColor: Colors.blue,
                   ),
                   SignContainer(
+                    icon: Icons.monitor_weight,
+                    title: "Height",
+                    value: "172.2 cm(5'8)",
+                    iconColor: Colors.orange,
+                    textColor: Colors.green,
+                    trailingIcon: Icons.height,
+                    trailColor: Colors.blue,
+                  ),
+                  SignContainer(
                     icon: Icons.bloodtype_outlined,
                     title: "Blood Pressure",
                     value: "119/78 mmHg",
@@ -89,7 +77,7 @@ class _VitalSignsScreenState extends State<VitalSignsScreen> {
                   SignContainer(
                     icon: Icons.thermostat,
                     title: "Temperature",
-                    value: "90°F (32.22°C)",
+                    value: "97°F ( 36.1°C)",
                     iconColor: Colors.orangeAccent,
                     textColor: Colors.green,
                     trailingIcon: Icons.thermostat,

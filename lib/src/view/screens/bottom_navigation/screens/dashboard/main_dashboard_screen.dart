@@ -4,6 +4,7 @@ import 'package:coherent/src/view/components/dashboard_components/appointment_ca
 import 'package:coherent/src/view/components/dashboard_components/module_icon.dart';
 import 'package:coherent/src/view/screens/bottom_navigation/screens/dashboard/appointment_screen.dart';
 import 'package:coherent/src/view/screens/bottom_navigation/screens/dashboard/prescription.dart';
+import 'package:coherent/src/view/screens/bottom_navigation/screens/dashboard/results_screen.dart';
 import 'package:coherent/src/view/screens/bottom_navigation/screens/dashboard/vital_signs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,11 +21,13 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   final billController = Get.put(DashboardController());
+  final dashboardController = Get.put(DashboardController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.transparent,
-      body: Column(
+      body: SingleChildScrollView(
+          child: Column(
         children: [
           SizedBox(
             height: 1.6.h,
@@ -67,7 +70,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
           // Expanded(flex: 2, child: buildIcons())
         ],
-      ),
+      )),
     );
   }
 
@@ -144,13 +147,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       color: Colors.lightGreen,
                       image: AppAssets.prescription_logo,
                       title: 'Prescription'),
-                  ModuleIcon(callback: () {}, color: Colors.teal, image: AppAssets.reports_logo, title: 'Results'),
+                  ModuleIcon(
+                      callback: () {
+                        Get.to(() => ReportsScreen());
+                      },
+                      color: Colors.teal,
+                      image: AppAssets.reports_logo,
+                      title: 'Results'),
                 ],
               ),
               Divider(),
 
               /// recent appointment section
-              AppointmentCard()
+              AppointmentCard(
+                date: DateTime.now().add(Duration(days: 3, hours: 1, minutes: 10)), // 4 days ago, 1:10 hours earlier
+
+                shadow: false,
+                status: 'confirmed',
+              )
             ],
           ),
         ),
@@ -175,9 +189,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      'View All',
-                      style: TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+                    child: InkWell(
+                      onTap: () {
+                        Get.to(() => ReportsScreen());
+                      },
+                      child: Text(
+                        'View All',
+                        style: TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   )
                 ],
@@ -187,58 +206,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: 4,
-                    itemBuilder: (index, context) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          padding: EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "HbA1c Results",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  Icon(Icons.bloodtype, color: Colors.red, size: 24),
-                                  SizedBox(width: 4),
-                                  Text(
-                                    "7.22%",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                "Synced on",
-                                style: TextStyle(fontSize: 12, color: Colors.black54),
-                              ),
-                              Text(
-                                "30 Oct 2024",
-                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: Icon(Icons.monitor_heart, color: Colors.green, size: 32),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
+                    itemBuilder: (context, index) {
+                      var item = dashboardController.resultCards[index];
+                      return item;
                     }),
               ),
               SizedBox(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../controller/bottom_navigation_controller/bottom_navigation_controller.dart';
 import '../../../core/utils/app_colors.dart';
@@ -24,8 +25,8 @@ class BottomNavigationButton extends StatelessWidget {
         // Change color based on selection
         Color color = selectedIndex.value == index ? Colors.blue.shade300 : AppColors.primaryColor;
         return Container(
-            width: 83,
-            height: 40,
+            width: 9.5.w,
+            height: 4.5.h,
             decoration: BoxDecoration(
               color: color,
               borderRadius: BorderRadius.circular(15),

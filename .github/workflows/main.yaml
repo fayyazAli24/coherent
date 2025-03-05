@@ -45,7 +45,7 @@ jobs:
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
-          token: ${{ secrets.TEST }}  # Corrected input name
+          token: ${{ secrets.TEST }} 
           file: build/ios/iphoneos/FlutterIpaExport.ipa
           tag: v1.0  # Ensure this tag exists in your repository
           overwrite: true

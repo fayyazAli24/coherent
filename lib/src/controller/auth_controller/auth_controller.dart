@@ -5,6 +5,7 @@ import '../../model/login_model.dart';
 class AuthController extends GetxController {
   var loginResponse = Rxn<LoginModel>(null);
   var signupResponse = Rxn<String>(null);
+  var mrno = Rxn<String>(null);
   RxBool isLoading = false.obs;
 
   Future<LoginModel?> loginService(String email, String password) async {
@@ -34,6 +35,7 @@ class AuthController extends GetxController {
       if (response != null) {
         isLoading.value = false;
         signupResponse.value = response;
+        return signupResponse.value;
       }
     } catch (e) {
       isLoading.value = false;

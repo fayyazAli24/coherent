@@ -19,7 +19,7 @@ class LoginModel {
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-        accessToken: json["accessToken"] ?? "", // Default empty string
+        accessToken: json["accessToken"] ?? "",
         mrNo: json["mrNo"] ?? "",
       );
 

@@ -227,18 +227,20 @@ class _LoginScreenState extends State<LoginScreen> {
               var response = await authController.loginService(
                   userNameController.text.trim(),
                   passwordController.text.trim());
-              if (response == null) {
-                Get.snackbar("Login Error", "Invalid Credentials",
-                    colorText: Colors.white,
-                    backgroundColor: Colors.redAccent,
-                    snackPosition: SnackPosition.BOTTOM);
-              }
 
-              Get.snackbar("Login Successfully", "Welcome",
+              if(response != null){
+                authController.mrno.value = response.mrNo;
+                Get.snackbar("Login Successfully", "Welcome",
+                    colorText: Colors.white,
+                    backgroundColor: Colors.green,
+                    snackPosition: SnackPosition.BOTTOM);
+                Get.toNamed(RouteNames.bottomNavigation);
+              }
+              Get.snackbar("Login Error", "Invalid Credentials",
                   colorText: Colors.white,
-                  backgroundColor: Colors.green,
+                  backgroundColor: Colors.redAccent,
                   snackPosition: SnackPosition.BOTTOM);
-              Get.toNamed(RouteNames.bottomNavigation);
+
             }
           },
           child: TitleText(
@@ -250,90 +252,56 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future loading() {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return const AlertDialog(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.primaryColor,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
+  // Future loading() {
+  //   return showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (context) {
+  //       return const AlertDialog(
+  //         content: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             Center(
+  //               child: CircularProgressIndicator(
+  //                 color: AppColors.primaryColor,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+  //
+  // Future<dynamic> errorDialog(String msg) {
+  //   return showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return AlertDialog(
+  //         title: Center(
+  //           child: TitleText(
+  //             title: msg,
+  //             fontSize: 20,
+  //             weight: FontWeight.w500,
+  //           ),
+  //         ),
+  //         actions: [
+  //           Center(
+  //             child: FractionallyElevatedButton(
+  //               onTap: () {},
+  //               child: TitleText(
+  //                 title: "OK",
+  //                 color: AppColors.white,
+  //                 weight: FontWeight.w500,
+  //               ),
+  //             ),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
-  Future<dynamic> errorDialog(String msg) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Center(
-            child: TitleText(
-              title: msg,
-              fontSize: 20,
-              weight: FontWeight.w500,
-            ),
-          ),
-          actions: [
-            Center(
-              child: FractionallyElevatedButton(
-                onTap: () {},
-                child: TitleText(
-                  title: "OK",
-                  color: AppColors.white,
-                  weight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Container footer() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      decoration: const BoxDecoration(
-        color: Colors.deepOrangeAccent,
-      ),
-      child: Center(
-        child: Column(
-          children: [
-            TitleText(
-              title: "Copyright © 2025. All "
-                  "rights reserved.",
-              color: AppColors.white,
-            ),
-            AppSize.vrtSpace(10),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 100,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  buildIcons(AppAssets.facebook),
-                  buildIcons(AppAssets.googlePlus),
-                  buildIcons(AppAssets.linkedIn),
-                  buildIcons(AppAssets.twitter),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 class BottomCurveClipper extends CustomClipper<Path> {

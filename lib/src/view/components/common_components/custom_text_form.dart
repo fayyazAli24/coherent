@@ -53,7 +53,9 @@ class CustomTextFormField extends StatelessWidget {
       obscureText: obscureText,
       decoration: InputDecoration(
         suffixIcon: suffix != null
-            ? IconButton(onPressed: onSuffixTap, icon: suffix ?? Icon(Icons.check_circle_outline_outlined))
+            ? IconButton(
+                onPressed: onSuffixTap,
+                icon: suffix ?? Icon(Icons.check_circle_outline_outlined))
             : null,
         hintText: hint,
         prefixIcon: prefixIcon,

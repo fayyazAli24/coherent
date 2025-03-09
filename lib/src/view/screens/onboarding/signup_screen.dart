@@ -1,37 +1,48 @@
-import 'package:coherent/src/controller/auth_controller/auth_controller.dart';
-import 'package:coherent/src/core/routes/route_names.dart';
-import 'package:coherent/src/view/components/common_components/heading_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import '../../components/common_components/title_text.dart';
+import 'package:coherent/src/view/components/common_components/heading_text.dart';
+import '../../../controller/auth_controller/auth_controller.dart';
+import '../../../core/routes/route_names.dart';
 import '../../../core/utils/app_assets.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../services/common_services/app_service.dart';
 import '../../components/common_components/custom_text_form.dart';
 import '../../components/common_components/fractionally_elevated_button.dart';
-import '../../components/common_components/title_text.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
+  final emailController = TextEditingController();
+  final mrnoController = TextEditingController();
+  final emiratesIdController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final dobController = TextEditingController();
   final authController = Get.put(AuthController());
 
   bool passFilled = false;
   bool userFilled = false;
-
+  @override
   @override
   void dispose() {
     // TODO: implement dispose
     userNameController.dispose();
     passwordController.dispose();
+    emailController.dispose();
+    mrnoController.dispose();
+    emiratesIdController.dispose();
+    dobController.dispose();
+    phoneNumberController.dispose();
     super.dispose();
   }
 
@@ -79,7 +90,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           AppSize.vrtSpace(5),
                           passTextField(passFilled),
                           AppSize.vrtSpace(10),
-                          AppSize.vrtSpace(15),
+                          emailTextField(false),
+                          AppSize.vrtSpace(10),
+                          mrnoTextField(false),
+                          AppSize.vrtSpace(10),
+                          emiratesIdTextField(false),
+                          AppSize.vrtSpace(10),
+                          phoneNumberTextField(false),
+                          AppSize.vrtSpace(10),
+                          dobTextField(false),
+                          AppSize.vrtSpace(10),
                           loginButton(),
                           AppSize.vrtSpace(10),
                         ],
@@ -144,29 +164,32 @@ class _LoginScreenState extends State<LoginScreen> {
     return CustomTextFormField(
       hint: "Password",
       filled: passFilled,
-      // onChanged: (value) {
-      //   if (value?.isNotEmpty ?? false) {
-      //     // ref.read(getPasswordFieldFilledProvider.notifier).state = true;
-      //   } else {
-      //     // ref.read(getPasswordFieldFilledProvider.notifier).state = false;
-      //   }
-      // },
-      // obscureText: authController.isObsecure.value,
       controller: passwordController,
       validator: validator,
-      onSuffixTap: () {
-        // authController.isObsecure.value = !authController.isObsecure.value;
-        // print("----- ${authController.isObsecure.value}");
-      },
-
-      autovalidateMode: AutovalidateMode.onUserInteraction, obscureText: false,
-      // suffix: authController.isObsecure.value ? const Icon(Icons.visibility_off) : const Icon(Icons.visibility),
+      onSuffixTap: () {},
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      obscureText: false,
     );
   }
 
   CustomTextFormField userTextField(bool userFilled) {
     return CustomTextFormField(
       controller: userNameController,
+      hint: "full Name",
+      obscureText: false,
+      validator: validator,
+      filled: userFilled,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: (value) {
+        if (value?.isNotEmpty ?? false) {
+        } else {}
+      },
+    );
+  }
+
+  CustomTextFormField emailTextField(bool? userFilled) {
+    return CustomTextFormField(
+      controller: emailController,
       hint: "Email",
       obscureText: false,
       validator: validator,
@@ -174,10 +197,67 @@ class _LoginScreenState extends State<LoginScreen> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: (value) {
         if (value?.isNotEmpty ?? false) {
-          // ref.read(getUserFieldFilledProvider.notifier).state = true;
-        } else {
-          // ref.read(getUserFieldFilledProvider.notifier).state = false;
-        }
+        } else {}
+      },
+    );
+  }
+
+  CustomTextFormField mrnoTextField(bool? userFilled) {
+    return CustomTextFormField(
+      controller: mrnoController,
+      hint: "mrNo",
+      obscureText: false,
+      validator: validator,
+      filled: userFilled,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: (value) {
+        if (value?.isNotEmpty ?? false) {
+        } else {}
+      },
+    );
+  }
+
+  CustomTextFormField emiratesIdTextField(bool? userFilled) {
+    return CustomTextFormField(
+      controller: emiratesIdController,
+      hint: "Emirates ID",
+      obscureText: false,
+      validator: validator,
+      filled: userFilled,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: (value) {
+        if (value?.isNotEmpty ?? false) {
+        } else {}
+      },
+    );
+  }
+
+  CustomTextFormField dobTextField(bool? userFilled) {
+    return CustomTextFormField(
+      controller: dobController,
+      hint: "DOB",
+      obscureText: false,
+      validator: validator,
+      filled: userFilled,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: (value) {
+        if (value?.isNotEmpty ?? false) {
+        } else {}
+      },
+    );
+  }
+
+  CustomTextFormField phoneNumberTextField(bool? userFilled) {
+    return CustomTextFormField(
+      controller: phoneNumberController,
+      hint: "Phone Number",
+      obscureText: false,
+      validator: validator,
+      filled: userFilled,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: (value) {
+        if (value?.isNotEmpty ?? false) {
+        } else {}
       },
     );
   }
@@ -224,21 +304,26 @@ class _LoginScreenState extends State<LoginScreen> {
       child: FractionallyElevatedButton(
           onTap: () async {
             if (_formKey.currentState!.validate()) {
-              var response = await authController.loginService(
+              var response = await authController.signupService(
                   userNameController.text.trim(),
-                  passwordController.text.trim());
+                  emailController.text.trim(),
+                  passwordController.text.trim(),
+                  mrnoController.text.trim(),
+                  emiratesIdController.text.trim(),
+                  phoneNumberController.text.trim(),
+                  dobController.text.trim());
               if (response == null) {
-                Get.snackbar("Login Error", "Invalid Credentials",
+                Get.snackbar("Server Down", "Something went wrong",
                     colorText: Colors.white,
                     backgroundColor: Colors.redAccent,
                     snackPosition: SnackPosition.BOTTOM);
               }
 
-              Get.snackbar("Login Successfully", "Welcome",
+              Get.snackbar("Successfully Registered", "Signup successfull",
                   colorText: Colors.white,
                   backgroundColor: Colors.green,
                   snackPosition: SnackPosition.BOTTOM);
-              Get.toNamed(RouteNames.bottomNavigation);
+              Get.toNamed(RouteNames.login);
             }
           },
           child: TitleText(
@@ -297,41 +382,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         );
       },
-    );
-  }
-
-  Container footer() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      decoration: const BoxDecoration(
-        color: Colors.deepOrangeAccent,
-      ),
-      child: Center(
-        child: Column(
-          children: [
-            TitleText(
-              title: "Copyright © 2025. All "
-                  "rights reserved.",
-              color: AppColors.white,
-            ),
-            AppSize.vrtSpace(10),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 100,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  buildIcons(AppAssets.facebook),
-                  buildIcons(AppAssets.googlePlus),
-                  buildIcons(AppAssets.linkedIn),
-                  buildIcons(AppAssets.twitter),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -9,7 +9,10 @@ import '../storage_service/storage_service.dart';
 class APIService {
   StorageServices storageServices = StorageServices();
 
-  static Future<dynamic> login({required String api, Map<String, dynamic>? body}) async {
+
+
+  static Future<dynamic> signup(
+      {required String api, Map<String, dynamic>? body}) async {
     try {
       var header = {
         "Content-Type": "application/json",
@@ -17,7 +20,34 @@ class APIService {
       log("*** Request ***");
       log("URI : $api");
 
-      final response = await http.post(headers: header, Uri.parse(api), body: jsonEncode(body));
+      final response = await http.post(
+          headers: header, Uri.parse(api), body: jsonEncode(body));
+
+      if (response.statusCode == 200) {
+        log("*** response ***");
+        log("URI : $api");
+        log("${response.body}");
+
+        return response.body;
+      }
+      log("status code ${response.statusCode} || API : $api");
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+  static Future<dynamic> login(
+      {required String api, Map<String, dynamic>? body}) async {
+    try {
+      var header = {
+        "Content-Type": "application/json",
+      };
+      log("*** Request ***");
+      log("URI : $api");
+
+      final response = await http.post(
+          headers: header, Uri.parse(api), body: jsonEncode(body));
 
       if (response.statusCode == 200) {
         log("*** response ***");
@@ -38,20 +68,20 @@ class APIService {
       final token = await StorageServices().read(tokenKey);
       var header;
 
-      if (token != null) {
-        header = {
-          "Content-Type": "application/json",
-          "MAPIkey": "Bearer $token",
-        };
-      }
+      // if (token != null) {
       header = {
         "Content-Type": "application/json",
+        "MAPIkey": "Bearer $token",
       };
+      // }
+      // header = {
+      //   "Content-Type": "application/json",
+      // };
 
       log("*** Request ***");
       log("URI : $api");
 
-      final response = await http.get(Uri.parse(api));
+      final response = await http.get(headers: header, Uri.parse(api));
 
       if (response.statusCode == 200) {
         log("*** response ***");
@@ -66,23 +96,25 @@ class APIService {
     }
   }
 
-  static Future<dynamic> post({required String api, String? id, Map<String, dynamic>? body}) async {
+  static Future<dynamic> post(
+      {required String api, String? id, Map<String, dynamic>? body}) async {
     try {
       final token = await StorageServices().read(tokenKey);
       var header;
 
-      if (token != null) {
-        print("this is the header");
-        header = {
-          "Content-Type": "application/json",
-          "MAPIkey": token,
-        };
-      } else if (token == null) {
-        print("thissssssssssss");
-        header = {
-          "Content-Type": "application/json",
-        };
-      }
+      // if (token != null) {
+      print("this is the header");
+      header = {
+        "Content-Type": "application/json",
+        "MAPIkey": token,
+      };
+      // }
+      // else if (token == null) {
+      //   print("thissssssssssss");
+      //   header = {
+      //     "Content-Type": "application/json",
+      //   };
+      // }
 
       log("*** Request ***");
       log("URI : $api");

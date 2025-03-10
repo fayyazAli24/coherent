@@ -1,13 +1,13 @@
+import 'package:coherent/src/view/screens/bottom_navigation/screens/faq_screen.dart';
 import 'package:coherent/src/view/screens/bottom_navigation/screens/messaging/main_landing_screen.dart';
 import 'package:coherent/src/view/screens/bottom_navigation/screens/notification_screen.dart';
 import 'package:coherent/src/view/screens/bottom_navigation/screens/service_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import '../../view/screens/bottom_navigation/screens/dashboard/main_dashboard_screen.dart';
-import '../../view/screens/bottom_navigation/screens/faq_screen.dart';
+import '../view/screens/bottom_navigation/screens/dashboard/main_dashboard_screen.dart';
 
-class BottomNavigationController extends GetxController {
+class CustomDrawerController extends GetxController {
   @override
   void onInit() {
     setTitle();
@@ -32,9 +32,9 @@ class BottomNavigationController extends GetxController {
       case 3:
         return const NotficationScreen();
       case 4:
-        return MainLandingScreen();
+        return const MainLandingScreen();
       default:
-        return const FaqScreen();
+        return FaqScreen();
     }
   }
 

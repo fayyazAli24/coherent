@@ -1,4 +1,5 @@
 import 'package:coherent/src/core/routes/route_names.dart';
+import 'package:coherent/src/view/screens/bottom_navigation/screens/messaging/main_landing_screen.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 import '../../view/screens/bottom_navigation/landing_page.dart';
@@ -23,6 +24,10 @@ class AppRoutes {
     GetPage(
       name: RouteNames.splash,
       page: () => const SplashScreen(),
+    ),
+    GetPage(
+      name: RouteNames.messagingLanding,
+      page: () => const MainLandingScreen(),
     ),
   ];
 }

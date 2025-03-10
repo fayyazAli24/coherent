@@ -1,13 +1,13 @@
 import 'package:coherent/src/controller/bottom_navigation_controller/appointment_controller.dart';
-import 'package:coherent/src/controller/bottom_navigation_controller/weekly_card.dart';
 import 'package:coherent/src/core/utils/app_colors.dart';
 import 'package:coherent/src/view/components/appointment_components/doctor_card.dart';
+import 'package:coherent/src/view/components/appointment_components/weekly_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../../../controller/bottom_navigation_controller/time_card.dart';
+import '../../../../components/appointment_components/time_card.dart';
 import '../../../../components/common_components/custom_button.dart';
 
 class SetTimeScreen extends StatefulWidget {

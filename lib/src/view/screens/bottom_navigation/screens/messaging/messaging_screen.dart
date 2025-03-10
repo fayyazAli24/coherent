@@ -1,31 +1,52 @@
+import 'package:coherent/src/controller/bottom_navigation_controller/messaging_controller.dart';
 import 'package:coherent/src/core/utils/app_colors.dart';
+import 'package:coherent/src/view/components/messagin_components/contact_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../model/message_model.dart';
+import '../../../../../model/message_model.dart';
 
 class MessagingScreen extends StatefulWidget {
-  const MessagingScreen({super.key});
+  final ContactCard item;
+  const MessagingScreen({super.key, required this.item});
 
   @override
   State<MessagingScreen> createState() => _MessagingScreenState();
 }
 
 class _MessagingScreenState extends State<MessagingScreen> {
-  List<Message> messages = [
-    Message(
-        text: "Hello MR Fayyaz Ali This is Dr Saleem your new prescription have been assigned please check your "
-            "prescription notification",
-        date: DateTime.now(),
-        isSentByMe: false),
-    Message(text: "Hi DR thank you yes its assigned", date: DateTime.now(), isSentByMe: true),
-  ];
+  final controller = Get.put(MessaginController());
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final messageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: CircleAvatar(
+                // radius: 30,
+                child: Image.asset(
+                  widget.item.imagePath,
+                  width: 30,
+                ),
+              ),
+            ),
+            Text(widget.item.doctorName)
+          ],
+        ),
+      ),
       body: Column(
         children: [
           // Messages list
@@ -35,8 +56,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
               order: GroupedListOrder.DESC,
               useStickyGroupSeparators: true,
               floatingHeader: true,
-              elements: messages,
-              groupBy: (message) => DateTime(message.date!.year, message.date!.month, message.date!.day),
+              elements: controller.messages,
+              groupBy: (message) => DateTime(message.date.year, message.date.month, message.date.day),
               groupHeaderBuilder: (Message message) => SizedBox(
                 height: 40,
                 child: Center(
@@ -112,9 +133,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
                       if (messageController.text.isNotEmpty) {
                         final message = Message(text: messageController.text, date: DateTime.now(), isSentByMe: true);
                         print("Sending message...");
-
                         setState(() {
-                          messages.add(message);
+                          controller.messages.add(message);
                           messageController.clear();
                         });
                       }

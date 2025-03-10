@@ -1,5 +1,6 @@
 import 'package:coherent/src/core/utils/app_assets.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SignContainer extends StatelessWidget {
@@ -8,23 +9,32 @@ class SignContainer extends StatelessWidget {
   final Color textColor;
   final String title;
   final String value;
+  final DateTime? dateTime;
   final trailingIcon;
   final trailColor;
 
   const SignContainer(
       {super.key,
-      required this.icon,
+      this.icon = Icons.add,
       required this.title,
       required this.value,
       required this.iconColor,
       required this.textColor,
+      this.dateTime,
       required this.trailingIcon,
       required this.trailColor});
+
+  String _formatDateTime(DateTime? dateTime) {
+    if (dateTime == null) {
+      return ""; // Return an empty string if dateTime is null
+    }
+    return DateFormat('dd MMM yyyy').format(dateTime);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 60.w, // Adjust based on UI needs
+        width: 60.w,
         height: 21.h,
         padding: EdgeInsets.all(12),
         margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -46,7 +56,6 @@ class SignContainer extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                /// **Title Text**
                 Text(
                   title,
                   style: TextStyle(
@@ -56,8 +65,6 @@ class SignContainer extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 6),
-
-                /// **Icon + Value**
                 Row(
                   children: [
                     Icon(icon, color: iconColor, size: 20),
@@ -73,18 +80,21 @@ class SignContainer extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 1.h),
-
-                /// **Synced Info**
-                Text(
-                  "Synced on",
-                  style: TextStyle(fontSize: 12, color: Colors.black54),
-                ),
-                SizedBox(height: 1.h),
-
-                Text(
-                  "30 Oct 2024",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
+                if (dateTime != null) // Conditional rendering based on dateTime
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Synced on",
+                        style: TextStyle(fontSize: 12, color: Colors.black54),
+                      ),
+                      SizedBox(height: 1.h),
+                      Text(
+                        _formatDateTime(dateTime),
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
               ],
             ),
             Column(
@@ -94,8 +104,8 @@ class SignContainer extends StatelessWidget {
                   height: 1.h,
                 ),
                 Image.asset(
-                  AppAssets.vital_signs, // Replace with your image path
-                  width: 40, // Adjust size as needed
+                  AppAssets.vital_signs,
+                  width: 40,
                   height: 40,
                 ),
               ],

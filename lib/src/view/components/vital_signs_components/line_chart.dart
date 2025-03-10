@@ -4,27 +4,29 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../core/utils/app_colors.dart';
 
 class LineChartWidget extends StatefulWidget {
-  const LineChartWidget({Key? key}) : super(key: key);
-
+  List<ChartData>? chartData;
+  LineChartWidget({Key? key, this.chartData}) : super(key: key);
   @override
   _LineDefaultState createState() => _LineDefaultState();
 }
 
 class _LineDefaultState extends State<LineChartWidget> {
   DateTime now = DateTime.now();
-  late List<_ChartData> chartData; // Initialize chartData properly
-  List<double> values = [22.5, 22.3, 21.0, 21.7, 21.5, 21.8];
+  List<double> values = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
 
   @override
   void initState() {
     super.initState();
-    chartData = []; // Properly initialize the list
 
-    for (int i = 0; i < values.length; i++) {
-      DateTime monthDate = DateTime(now.year, now.month - i, 1);
-      String monthName = getMonthAbbreviation(monthDate.month);
+    if (widget.chartData == null) {
+      widget.chartData = [];
 
-      chartData.insert(0, _ChartData(monthName, values[i])); // Insert values
+      for (int i = 0; i < values.length; i++) {
+        DateTime monthDate = DateTime(now.year, now.month - i, 1);
+        String monthName = getMonthAbbreviation(monthDate.month);
+
+        widget.chartData?.insert(0, ChartData(monthName, values[i]));
+      }
     }
   }
 
@@ -35,13 +37,11 @@ class _LineDefaultState extends State<LineChartWidget> {
         plotAreaBorderWidth: 0,
         primaryXAxis: CategoryAxis(
           majorGridLines: MajorGridLines(width: 0),
-          labelRotation: 45, // Set the label rotation angle
+          labelRotation: 45,
         ),
         primaryYAxis: NumericAxis(
-          minimum: 18, // Set the minimum value of BMI
-          maximum: 25, // Set the maximum value of BMI
-          interval: 1, // Interval between BMI values
-          labelFormat: '{value}', // Format the Y-axis labels
+          interval: 1,
+          labelFormat: '{value}',
           axisLine: AxisLine(width: 0),
           majorTickLines: MajorTickLines(color: Colors.transparent),
         ),
@@ -51,12 +51,12 @@ class _LineDefaultState extends State<LineChartWidget> {
     );
   }
 
-  List<LineSeries<_ChartData, String>> _getLineSeries() {
-    return <LineSeries<_ChartData, String>>[
-      LineSeries<_ChartData, String>(
-        dataSource: chartData,
-        xValueMapper: (_ChartData data, _) => data.time,
-        yValueMapper: (_ChartData data, _) => data.transaction,
+  List<LineSeries<ChartData, String>> _getLineSeries() {
+    return <LineSeries<ChartData, String>>[
+      LineSeries<ChartData, String>(
+        dataSource: widget.chartData,
+        xValueMapper: (ChartData data, _) => data.time,
+        yValueMapper: (ChartData data, _) => data.transaction,
         name: 'BMI',
         color: AppColors.primaryColor,
         markerSettings: const MarkerSettings(isVisible: true),
@@ -70,8 +70,8 @@ String getMonthAbbreviation(int month) {
   return monthNames[month - 1];
 }
 
-class _ChartData {
-  _ChartData(this.time, this.transaction);
-  final String time; // Represents the month (e.g., Jan, Feb)
-  final double transaction; // Represents BMI value for the month
+class ChartData {
+  ChartData(this.time, this.transaction);
+  final String time;
+  final double transaction;
 }

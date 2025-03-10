@@ -189,4 +189,54 @@ class DashboardController extends GetxController {
       }
     };
   }
+
+  List<Map<String, String>> faqData = [
+    {
+      'question': 'How do I log in to the Coherent app?',
+      'answer':
+          'You can log in using the credentials provided by your medical center or register using your MRN and demographic details.',
+    },
+    {
+      'question': 'How can I review my appointments?',
+      'answer':
+          'Your previous and upcoming appointments are available in the "Appointments" section. Your nearest appointment is also displayed on your Dashboard.',
+    },
+    {
+      'question': 'Can I schedule or reschedule an appointment through the app?',
+      'answer': 'Yes, you can book, reschedule, or cancel appointments directly from the "Appointments" section.',
+    },
+    {
+      'question': 'How can I access my medical records and test results?',
+      'answer': 'Your vital signs, prescriptions, and lab results are available in the "Health Records" section.',
+    },
+    {
+      'question': 'Can I consult with my doctor via the app?',
+      'answer':
+          'Yes, you can request a virtual consultation or send messages to your doctor through the app’s telehealth feature.',
+    },
+    {
+      'question': 'How can I review prescriptions?',
+      'answer':
+          'You can review prescriptions by navigating to the "Prescriptions" section and selecting the required prescription.',
+    },
+    {
+      'question': 'What should I do if I forget my password?',
+      'answer':
+          'Click on "Forgot Password" on the login screen and follow the steps to reset your password using your registered email or phone number.',
+    },
+    {
+      'question': 'How do I get reminders for my medications and upcoming appointments?',
+      'answer':
+          'Enable push notifications in the app settings to receive timely alerts for medications, appointments, and health reminders.',
+    },
+    {
+      'question': 'Is my health data secure in the app?',
+      'answer':
+          'Yes, the app uses advanced encryption and follows healthcare compliance standards to ensure your data remains private and secure.',
+    },
+    {
+      'question': 'Who do I contact for technical support or assistance?',
+      'answer': 'You can reach out to our support team via the provided helpline.',
+    },
+  ];
 }

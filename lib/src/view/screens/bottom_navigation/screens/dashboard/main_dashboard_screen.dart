@@ -26,6 +26,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.transparent,
+      // drawer: Drawer(),
       body: SingleChildScrollView(
           child: Column(
         children: [

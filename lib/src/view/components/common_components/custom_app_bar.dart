@@ -8,9 +8,11 @@ import '../../../core/utils/app_colors.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String text;
   final backgroundColor;
+  // Widget drawer;
   var backbutton;
   CustomAppBar({
     required this.text,
+    // required this.drawer,
     this.backgroundColor,
     this.backbutton,
     super.key,
@@ -21,6 +23,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: backbutton ?? false,
       backgroundColor: backgroundColor ?? AppColors.primaryColor,
+      leading: IconButton(
+        icon: const Icon(Icons.menu, color: Colors.white),
+        onPressed: () {
+          Scaffold.of(context).openDrawer(); // Manually open drawer
+        },
+      ),
       centerTitle: true,
       iconTheme: IconThemeData(
         color: Colors.white, // Change back button color here

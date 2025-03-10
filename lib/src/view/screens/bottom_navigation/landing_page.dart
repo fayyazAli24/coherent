@@ -1,3 +1,4 @@
+import 'package:coherent/src/view/components/dashboard_components/drawer.dart';
 import 'package:coherent/src/view/screens/bottom_navigation/screens/appointment/select_doctor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,6 +26,7 @@ class _LandingPageState extends State<LandingPage> {
             text: bottomNavigationController.appBarText.value,
             backgroundColor: AppColors.primaryColor,
           ),
+          drawer: CustomDrawer(),
           body: PopScope(
               canPop: false, child: bottomNavigationController.pages[bottomNavigationController.pageIndex.value]),
           bottomNavigationBar: _buildBottomNavigationBar(),
@@ -48,7 +50,7 @@ class _LandingPageState extends State<LandingPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildBottomNavItem(index: 0, icon: Icons.home, label: "Home"),
-              _buildBottomNavItem(index: 1, icon: Icons.medical_services_outlined, label: "Services"),
+              _buildBottomNavItem(index: 1, icon: Icons.medical_services_outlined, label: "Packages"),
               const SizedBox(width: 60), // Space for the middle button
               _buildBottomNavItem(index: 2, icon: Icons.notification_add_outlined, label: "Notification"),
               _buildBottomNavItem(index: 3, icon: Icons.message_outlined, label: "Messages"),
